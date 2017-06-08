@@ -73,7 +73,7 @@
     return builder.toString();
   }
 ```
-  
+
 ## DiskCache
 
 ### 大小
@@ -148,6 +148,19 @@
 
 ### fit
 如果指定了fit模式，会等到绘制的时候根据view的真实大小进行decode
+
+
+## 后期处理
+```
+public RequestCreator transform(Transformation transformation)
+public RequestCreator transform(List<? extends Transformation> transformations)
+```
+
+## 加载动画
+```
+public RequestCreator noFade()
+```
+
 
 
 
