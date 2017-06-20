@@ -161,6 +161,13 @@ public RequestCreator transform(List<? extends Transformation> transformations)
 public RequestCreator noFade()
 ```
 
+### 重试
+重试2次
+
+### 取消
+如果下载过程已开设，不会取消下载
+
+
 
 
 
