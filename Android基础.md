@@ -15,10 +15,9 @@
 7. View
 8. TextView
 9. ImageView
-10. Drawable
+10. Drawable & Bitmap
 11. Fragment
-12. Bitmap
-13. Http
+13. Http & Https
 14. WebView
 15. Support Library
 

@@ -30,6 +30,7 @@
 调用是异步的，但是都是在主线程
 
 
+```
 (function (b) {
 	console.log('begin to init.')
 
@@ -68,5 +69,6 @@
 
 	console.log('init finished. b.app = ' + b.app)
 })(window);
+```
 
 注入以上代码就可以在js中用window.app调用相关方法
