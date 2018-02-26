@@ -100,3 +100,28 @@ case START_ACTIVITY_TRANSACTION:
 
 
 
+1. 启动进程将要启动的activity通过binder传给ActivityManagerService, 
+2. ActivityManagerService 对信息进行处理。然后查看目标进程是否存在，如果不存在创建进程。然后将创建工作交由目标进程处理
+
+
+Instrument
+
+```
+     * @param who The Context from which the activity is being started.
+     * @param contextThread The main thread of the Context from which the activity
+     *                      is being started.
+     * @param token Internal token identifying to the system who is starting 
+     *              the activity; may be null.
+     * @param target Which activity is performing the start (and thus receiving 
+     *               any result); may be null if this call is not being made
+     *               from an activity.
+     * @param intent The actual Intent to start.
+     * @param requestCode Identifier for this request's result; less than zero 
+     *                    if the caller is not expecting a result.
+     * @param options Addition options.
+    public ActivityResult execStartActivity(
+            Context who, IBinder contextThread, IBinder token, Activity target,
+            Intent intent, int requestCode, Bundle options)
+```
+
+

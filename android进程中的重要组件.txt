@@ -1,0 +1,14 @@
+1. Binder 
+    IPC调用，赋值调用系统组件和被其他进程调用
+
+2. ApplicationThread
+    实际管理activity等组件的生命期
+
+3. Instrument
+    创建组件的抽象层
+
+4. TaskStack 任务
+
+5. WindowManager
+    窗口管理
+
