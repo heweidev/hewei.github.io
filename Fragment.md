@@ -35,8 +35,9 @@
 页面不显示的时候不销毁Fragment对象
 
 ### FragmentStatePagerAdapter
-适合多数页面，页面不适用后直接销毁对象，只保存状态
+适合多数页面，页面不使用后，直接销毁对象，只保存状态
 
 ### FragmentTabHost
 跟上边两个不同。从TabHost继承， 是一个ViewGroup对象
 但是里边对Fragment进行管理的代码类似
+用的是attach和detach， 不销毁对象
