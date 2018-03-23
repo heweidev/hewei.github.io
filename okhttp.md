@@ -104,3 +104,15 @@ client for each request wastes resources on idle pools.
 问题：
 1. 先cache后net
 2. post请求cache
+
+## Https握手
+1. 客户端向server发送tls的版本和支持的加密算法， 以及随机数C
+2. server返回选用的加密方法和随机数S，同时返回server证书
+3. 客户端检验证书的合法性，然后生成随机数Pre-Master，用证书中的公钥加密送给server。用随机数生成的秘钥对之前交互数据的hash进行加密
+4. server收到随机数后，用私钥解密，然后生成加密秘钥。然后用秘钥解密的hash和自己计算的hash进行校验
+5. 客户端校验
+
+
+![Img](http://img.blog.csdn.net/20160908134036615?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
+
+

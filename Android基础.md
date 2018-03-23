@@ -22,4 +22,13 @@
 15. Support Library
 16. Android Framework
 
+17. Message, Handler, Looper
+    1. Looper 存在用一个线程中
+    2. Looper不断从消息队列中取Message，然后交由hander处理
+
+    > A Handler allows you to send and process {@link Message} and Runnable
+    objects associated with a thread's {@link MessageQueue}. 
+
+    > Defines a message containing a description and arbitrary data object that can be
+    sent to a {@link Handler}. 
 

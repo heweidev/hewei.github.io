@@ -168,7 +168,13 @@ public RequestCreator noFade()
 如果下载过程已开始，不会取消下载
 
 
+### 网络变化
 
+默认情况下从WiFi切换到移动网络会自动重试，注意此处可能导致用户流量消耗
+      @Override 
+      boolean shouldRetry(boolean airplaneMode, NetworkInfo info) {
+        return info == null || info.isConnected();
+      }
 
 
 
