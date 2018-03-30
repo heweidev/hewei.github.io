@@ -41,3 +41,17 @@
 跟上边两个不同。从TabHost继承， 是一个ViewGroup对象
 但是里边对Fragment进行管理的代码类似
 用的是attach和detach， 不销毁对象
+
+
+### Fragment通信
+1. Fragment 跟Container Activity通信
+    找到对象后通过接口通信（OnAttach， findFragmentByTag, findFragmentById）
+
+2. Fragment 跟Container Fragment通信
+    找到对象后通过接口通信（getParentFragment， findFragmentByTag, findFragmentById）
+
+3. Fragment 跟其他Fragment通信
+    由于不清楚Fragment之间的关系，将无法直接通过直接调用对象接口的方法通信
+    中转通信： 通过第三方中转
+    广播或者事件总线
+
