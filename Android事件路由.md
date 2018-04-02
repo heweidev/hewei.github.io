@@ -49,6 +49,7 @@ public boolean onInterceptTouchEvent(MotionEvent ev)
 
 
 ### CoordinatorLayout
+    
 
 跟AppBarLayout配合使用
 里边需要包含一个有ScrollingViewBehavior的子view
