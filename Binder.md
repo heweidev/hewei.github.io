@@ -35,3 +35,12 @@ binder是Android进程间通信（IPC）和跨进程调用（RPC）的重要工�
     client如何找到server？
     通过ServiceManager
     因为server自己把提供的接口注册到了ServiceManager
+
+
+### 多进程
+    serviceManager 如何区分不同的进程
+    多个进程通过binder跟serviceManager通信，产生以下几个问题：
+    1. 所有进程共享相同的共享内存 （设备是相同的， 从而衍生一个问题，同一设备可以映射多个共享内存吗？）
+    2. 如果是共享相同内存，多个会话是如何同步的？
+    
+

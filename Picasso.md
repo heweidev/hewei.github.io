@@ -6,6 +6,11 @@
 - Automatic memory and disk caching.
 
 ## Thread 
+PicassoExecutorService.java
+Dispatcher.java 
+
+当网络网络变化后改变线程数目
+
 - 开几个线程？  
 根据网络类型开不同的线程
 - 2G 1个
@@ -175,6 +180,22 @@ public RequestCreator noFade()
       boolean shouldRetry(boolean airplaneMode, NetworkInfo info) {
         return info == null || info.isConnected();
       }
+
+### 自定义
+  executor 线程池  
+  downloader  downloader 是同步的， 需要在线程池里运行
+  defaultBitmapConfig
+  memoryCache
+  addRequestHandler     特殊的源
+  indicatorsEnabled     加载中状态， loadSource
+  loggingEnabled        日志
+  
+
+
+
+
+
+
 
 
 
