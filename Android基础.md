@@ -29,6 +29,6 @@
     > A Handler allows you to send and process {@link Message} and Runnable
     objects associated with a thread's {@link MessageQueue}. 
 
-    > Defines a message containing a description and arbitrary data object that can be
+    > Message Defines a message containing a description and arbitrary data object that can be
     sent to a {@link Handler}. 
 

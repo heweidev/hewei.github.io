@@ -15,4 +15,8 @@
      *setData（Binding）是异步的*
      所以要特别注意，如果要达到同步效果，还需要执行executePendingBindings 方法
 
+
+# view有id和没有id有什么区别？
+
+
      
