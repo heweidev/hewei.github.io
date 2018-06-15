@@ -19,6 +19,8 @@ Dispatcher.java
 - WiFi 4个
 
 ## Memcache
+  cache key跟目标大小，url等有关
+  cache命中原则
 
 ### cache大小
 
