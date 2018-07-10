@@ -12,10 +12,10 @@ provider， UI， 下载服务（service）
 
     任务创建 ——> 通过provider在数据库中创建一条记录
     任务管理（启、停，删） ->  通过provider更新字段
-
     任务进度和状态反馈  -> 写入provider
+    任务文件扫描后的URI
 
-    provider更新后会通知cursor发生变化
+    provider更新后会通知cursor发生变化，从而更新UI，实现进程间通信
 
 ## 任务管理和调度
     DownloadService
