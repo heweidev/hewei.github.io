@@ -42,7 +42,7 @@ sent to a {@link Handler}.
         }
     }
 
-1. 如果Stalled by a barrier， 取第一个异步消息.否则取第一个消息
+1. 如果Stalled by a barrier， 取第一个异步消息，否则取第一个消息
 2. 如果消息到达触发时间，直接处理。否则用nativePollOnce阻塞nextPollTimeoutMillis。如果调用了idleHandler， 阻塞时间为0
 ```        
     nativePollOnce(ptr, nextPollTimeoutMillis);
