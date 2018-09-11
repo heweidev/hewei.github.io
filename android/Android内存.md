@@ -37,6 +37,26 @@ App内存cache， 后台进程按照LRU cache
 7. 优化使用第三方库
 
 
+## Graphics内存
+[Graphics内存](https://blog.csdn.net/msf568834002/article/details/78881341)
+- EGL memtrack
+You will see this column when display driver’s memtrack module is enabled
+Before Lollipop5.1, this column is named “Graphics”.
+EGL memtrack memory is the summary of all surface buffers(the surface buffer increases to triple buffer after Android 4.1) and the size of the Atlas buffer. 
+However, Atlas buffer is actually a shared memory and shouldn’t be accounted into each UI process’ memory usage to overcount the memory usage. 
+Both surface buffer and Atlas buffer’s memory quota is reserved in project’s memory estimation, thus the memory usage of these buffers should be separately 
+accounted from process’ memory usage. So when you measure process’ memory usage, you can ignore this column.
+
+- GL memtrack
+
+You will see this column when display driver’s memtrack module is enabled
+Before Lollipop5.1, this column is named “GL”.
+HW acceleration memory is partially counted in process PSS. For example, for QCT platform the HW acceleration memory is partially counted in the PSS of /dev/kgsl-3d0 
+as we mentioned in the “Gfx dev” section. GL memtrack memory usage calculates the unaccounted /dev/kgsl-3d0 memory regions which PSS value equals 0.
+Please be noticed that the summation of GL memtrack and Gfx dev doesn’t reflect the complete HW acceleration memory since the full HW acceleration memory usage 
+should be counted with the VSS of /dev/kgsl-3d0. So the “TOTAL” value of dumpsys meminfo is smaller than actual physical memory usage.
+
+
 ## 实践
 
 一个近似空的app，只有一个Acitvity
@@ -89,6 +109,19 @@ WSS
                TOTAL:    78331       TOTAL SWAP PSS:      120
 
     从前台到后台 Java heap少了近5M， Graphics减少近30M
+
+    今日头条：
+                           Pss(KB)
+                        ------
+           Java Heap:    29092
+         Native Heap:    26132
+                Code:    34124
+               Stack:     2224
+            Graphics:    21720
+       Private Other:    16072
+              System:    16873
+
+               TOTAL:   146237       TOTAL SWAP PSS:       69
 
 WSS 跟 空App相比， 内存的主要增长点是：
    Java heap    | 更多的Java对象
