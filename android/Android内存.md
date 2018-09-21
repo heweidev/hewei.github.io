@@ -5,7 +5,7 @@ https://developer.android.google.cn/topic/performance/memory-overview
 ## gc
 > Android’s memory heap is a generational one, meaning that there are different buckets of allocations that it tracks, based on the expected life and size of an object being allocated. For example, recently allocated objects belong in the Young generation. When an object stays active long enough, it can be promoted to an older generation, followed by a permanent generation.
 
-堆按照次代来管理内存
+堆按照次代来管理内存，加快gc速度。新产生的内存被回收的可能性比较大
 Young generation
 older generation
 permanent generation
@@ -13,8 +13,8 @@ permanent generation
 ## 共享内存
 
 1. 每个App从Zygote fork出来，共享了大部分代码和资源
-2. Most static data is mmapped into a process. （odex， resouce， so）， 可以在必要时候page out
-3. In many places, Android shares the same dynamic RAM across processes using explicitly allocated shared memory regions (either with ashmem or gralloc). For example, window surfaces use shared memory between the app and screen compositor, and cursor buffers use shared memory between the content provider and client.
+2. Most static data is mmapped into a process. （**odex， resouce， so**）， 可以在必要时候page out
+3. In many places, Android shares the same dynamic RAM across processes using explicitly allocated shared memory regions (either with ashmem or gralloc). For example, **window surfaces** use shared memory between the app and screen compositor, and **cursor buffers** use shared memory between the content provider and client.
 
 ## Switch apps
 App内存cache， 后台进程按照LRU cache
@@ -23,19 +23,18 @@ App内存cache， 后台进程按照LRU cache
 # Manage your app's memory
 
 ## Memory Profiler 
-- See how your app allocates memory over time. The Memory Profiler shows a realtime graph of how much memory your app is using, the number of allocated Java objects, and when garbage collection occurs.
-- Initiate garbage collection events and take a snapshot of the Java heap while your app runs.
-- Record your app's memory allocations and then inspect all allocated objects, view the stack trace for each allocation, and jump to the corresponding code in the Android Studio editor.
+- See how your app allocates memory over time. The Memory Profiler shows a realtime graph of how much memory your app is using, the number of allocated Java objects, and when garbage collection occurs. （实时查看内存占用）
+- Initiate garbage collection events and take a snapshot of the Java heap while your app runs. （内存快照）
+- Record your app's memory allocations and then inspect all allocated objects, view the stack trace for each allocation, and jump to the corresponding code in the Android Studio editor. （获得对象的关系和调用栈）
 
 ## Use more memory-efficient code constructs (高效使用内存)
 1. 及时地停止Service  （JobScheduler && IntentService）
 2. 优化数据结构  （SparseArray替代HashMap）
-3. 优化抽象
+3. 优化抽象   （java的方法默认是虚方法，尽可能的用静态方法）
 4. Avoid memory churn减少内存闯动
 5. 减少无用资源
 6. 减少Apk大小
-7. 优化使用第三方库
-
+7. 优化使用第三方库   （无用资源，无用代码）
 
 ## Graphics内存
 [Graphics内存](https://blog.csdn.net/msf568834002/article/details/78881341)
@@ -133,3 +132,6 @@ WSS 跟 空App相比， 内存的主要增长点是：
     尽可能减少内存分配
     控制安装包大小
     优化图片等资源的使用
+    用内存池防止内存碎片
+    复用已有内存，防止内存闯动
+    

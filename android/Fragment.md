@@ -35,7 +35,7 @@ Called immediately after onCreateView(LayoutInflater, ViewGroup, Bundle) has ret
     在onCreateView返回后立即调用，但是view树还未挂到父对象上
 
     几个问题：
-        1. setRetainInstance后fragment的声明期会有变化
+        1. setRetainInstance后fragment的生命期会有变化
         2. onViewCreated和onActivityCreated
         3. 在哪里初始化数据
 

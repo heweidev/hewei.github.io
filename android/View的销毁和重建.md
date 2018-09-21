@@ -17,6 +17,6 @@
 
 
 # view有id和没有id有什么区别？
-
+没有在onSaveState的时候不会保存状态
 
      

@@ -15,7 +15,6 @@ android targetSdkVersion 23 （6.0）是个分水岭
 2. 保护BroadcastReceiver只接受授权通知，保护发送的通知只被授权的receiver收到
 3. 保护content provider指定uri的读写权限
 
-
 ## 临时授权
     访问邮件附件的场景
 
