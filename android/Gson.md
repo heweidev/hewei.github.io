@@ -52,7 +52,7 @@
       threadCalls.put(type, call);
 
       for (TypeAdapterFactory factory : factories) {
-        TypeAdapter<T> candidate = factory.create(this, type);
+        TypeAdapter<T> candidate = factory.create(this, type);  // 标号1
         if (candidate != null) {
           call.setDelegate(candidate);
           typeTokenCache.put(type, candidate);
@@ -68,6 +68,14 @@
       }
     }
   }
+
+  // 这里的实现很巧妙
+  // 这里采用threadLocal实现了一个Cache，方便在递归调用的时候直接从cache中取值
+  // 用threadlocal可以防止多线程的问题，保护cache的安全
+  // 标号1所在代码行中factory.create方法中可能引起getAdapter的递归，如递归中有get了当前的type就会出现死循环。
+  // 所以用FutureTypeAdapter先占位，返回占位的adapter，等到真正得到指在更新占位。
+  
+
 ```
 
 Gson 使用TypeAdapter进行用户自定义类型的解析
