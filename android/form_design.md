@@ -17,4 +17,6 @@ block分类
 
     需要打开activity或者dialog收集
 
-    
+    缺点：
+    item之间交互复杂
+    block的状态不好控制，比如enable， disable, focus等

@@ -116,3 +116,62 @@ client for each request wastes resources on idle pools.
 ![Img](http://img.blog.csdn.net/20160908134036615?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
 
 
+## Https 2.0
+  header压缩
+  multi exhange on the same connection
+  unsolicited push of representations from servers to clients  从服务器推送数据到client
+
+
+  ## Inner Interceptor
+
+### RetryAndFollowUpInterceptor  处理网络错误和重试
+    ip不可达，尝试其他ip
+    连接过期
+    代理服务器不可用
+    3xx response code
+    连接超时 408
+
+ ### Bridge Interceptor
+ > Bridges from application code to network code. First it builds a network request from a user request. Then it proceeds to call the network. Finally it builds a user response from the network response.
+
+ user <---> Net
+    // 默认keepalive
+    if (userRequest.header("Connection") == null) {
+      requestBuilder.header("Connection", "Keep-Alive");
+    }
+
+    填充host、cookie，user-agent等
+
+    // 如果没有指定Accept-Encoding， 开启gzip压缩
+    // 开启gzip后，同时负责对body进行解压缩。这个时候新的content-Length变成-1
+    if (userRequest.header("Accept-Encoding") == null && userRequest.header("Range") == null) {
+      transparentGzip = true;
+      requestBuilder.header("Accept-Encoding", "gzip");
+    }
+
+### CacheInteceptor
+
+
+### ConnectInterceptor
+    // 将HttpCodec和connection加入到chain中
+    RealInterceptorChain realChain = (RealInterceptorChain) chain;
+    Request request = realChain.request();
+    StreamAllocation streamAllocation = realChain.streamAllocation();
+
+    // We need the network to satisfy this request. Possibly for validating a conditional GET.
+    boolean doExtensiveHealthChecks = !request.method().equals("GET");
+    HttpCodec httpCodec = streamAllocation.newStream(client, chain, doExtensiveHealthChecks);
+    RealConnection connection = streamAllocation.connection();
+
+    return realChain.proceed(request, streamAllocation, httpCodec, connection);
+
+
+### CallServerIntercptor
+   发送网络请求
+    
+
+
+
+
+
+
