@@ -168,6 +168,33 @@ client for each request wastes resources on idle pools.
 
 ### CallServerIntercptor
    发送网络请求
+
+
+
+#### 上传文件
+请求示范：
+
+POST http://192.168.31.198:8080/uploadfile HTTP/1.1
+Host: 192.168.31.198:8080
+Connection: keep-alive
+Content-Length: 444
+Cache-Control: max-age=0
+Origin: http://192.168.31.198:8080
+Upgrade-Insecure-Requests: 1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary0y7bV7VcUPJem9EH
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Referer: http://192.168.31.198:8080/upload.html
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9,en;q=0.8
+
+------WebKitFormBoundary0y7bV7VcUPJem9EH
+Content-Disposition: form-data; name="fileUpload"; filename="output.json"
+Content-Type: application/json
+
+[{"outputType":{"type":"APK"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":5,"versionName":"V1.0","enabled":true,"outputFile":"location_debug_V1.0.apk","fullName":"debug","baseName":"debug"},"path":"location_debug_V1.0.apk","properties":{}}]
+------WebKitFormBoundary0y7bV7VcUPJem9EH--
+
     
 
 
