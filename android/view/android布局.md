@@ -1,5 +1,26 @@
 # Android View Measure和Layout
 
+
+## MeasureState
+    public static final int MEASURED_SIZE_MASK = 0x00ffffff;
+    public static final int MEASURED_STATE_MASK = 0xff000000;
+    public static final int MEASURED_HEIGHT_STATE_SHIFT = 16;
+    public static final int MEASURED_STATE_TOO_SMALL = 0x01000000;
+
+    width 和 height 一共32bit， 高用于描述state
+    measureState 用32bit表示，高16未标识width， 低16表示height
+
+        public final int getMeasuredState() {
+            return (mMeasuredWidth&MEASURED_STATE_MASK)
+                    | ((mMeasuredHeight>>MEASURED_HEIGHT_STATE_SHIFT)
+                            & (MEASURED_STATE_MASK>>MEASURED_HEIGHT_STATE_SHIFT));
+        }
+
+    目前系统只定义了一个state： EASURED_STATE_TOO_SMALL 表示view的大小比期望大小小
+
+    
+
+
 ViewGroup的onMeasure方法：
     首先计算背景的bounds， 然后用该bounds作为建议大小。
     如果有建议大小（specMode 等于AT_MOST或者EXACTLY），采用建议大小。否则采用默认大小
@@ -104,6 +125,12 @@ ViewGroup的onMeasure方法：
         return MeasureSpec.makeMeasureSpec(resultSize, resultMode);
     }
 
+    用来设置children的测量方式
+    public static int getChildMeasureSpec(int spec, int padding, int childDimension)
+
+    measureChildrenWidthMarins()
+
+
 
 ## FrameLayout
     依次measure各个child，然后用最大的宽和高设置view的大小
@@ -126,5 +153,4 @@ ViewGroup的onMeasure方法：
 
 ## LinearLayout    
 
-用来设置children的测量方式
-public static int getChildMeasureSpec(int spec, int padding, int childDimension)
+
