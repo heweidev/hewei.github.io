@@ -1,5 +1,5 @@
 # Drawable
-    - setBounds 位置和大小
+    - setBounds 位置和大小   不设置bounds默认是0， 绘制的时候将看不到
     - getPadding
     - setState
     - setLevel

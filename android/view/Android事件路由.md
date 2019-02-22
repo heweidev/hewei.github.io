@@ -4,7 +4,7 @@
 ```
 public boolean dispatchTouchEvent(MotionEvent event) 
 public boolean onTouchEvent(MotionEvent event)
-public boolean onInterceptTouchEvent(MotionEvent ev)
+public boolean onInterceptTouchEvent(MotionEvent ev)    // ViewGroup
 ```
 
 两个嵌套FrameLayout

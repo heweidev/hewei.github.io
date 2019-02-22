@@ -8,7 +8,7 @@
     public static final int MEASURED_STATE_TOO_SMALL = 0x01000000;
 
     width 和 height 一共32bit， 高用于描述state
-    measureState 用32bit表示，高16未标识width， 低16表示height
+    measureState 用32bit表示，高16位标识width， 低16表示height
 
         public final int getMeasuredState() {
             return (mMeasuredWidth&MEASURED_STATE_MASK)
