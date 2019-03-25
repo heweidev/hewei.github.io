@@ -170,6 +170,75 @@ client for each request wastes resources on idle pools.
    发送网络请求
 
 
+### 连接池和复用
+
+####核心类  
+- HttpCodec
+Encodes HTTP requests and decodes HTTP responses.
+- Connection
+The sockets and streams of an HTTP, HTTPS, or HTTPS+HTTP/2 connection. May be used for multiple
+HTTP request/response exchanges. Connections may be direct to the origin server or via a proxy
+- Transmitter
+Bridge between OkHttp's application and network layers. This class exposes high-level application layer primitives: connections, requests, responses, and streams.
+- Exchange
+Transmits a single HTTP request and a response pair. This layers connection management and events
+on {@link ExchangeCodec}, which handles the actual I/O.
+- ConnectPool
+ Manages reuse of HTTP and HTTP/2 connections for reduced network latency. HTTP requests that
+ share the same {@link Address} may share a {@link Connection}. This class implements the policy
+ of which connections to keep open for future use.
+
+- ExchangeFinder 
+/**
+ * Attempts to find the connections for a sequence of exchanges. This uses the following strategies:
+ *
+ * <ol>
+ *   <li>If the current call already has a connection that can satisfy the request it is used.
+ *       Using the same connection for an initial exchange and its follow-ups may improve locality.
+ *
+ *   <li>If there is a connection in the pool that can satisfy the request it is used. Note that
+ *       it is possible for shared exchanges to make requests to different host names! See {@link
+ *       RealConnection#isEligible} for details.
+ *
+ *   <li>If there's no existing connection, make a list of routes (which may require blocking DNS
+ *       lookups) and attempt a new connection them. When failures occur, retries iterate the list
+ *       of available routes.
+ * </ol>
+ *
+ * <p>If the pool gains an eligible connection while DNS, TCP, or TLS work is in flight, this finder
+ * will prefer pooled connections. Only pooled HTTP/2 connections are used for such de-duplication.
+ *
+ * <p>It is possible to cancel the finding process.
+ */
+
+ 连接复用的策略
+ 1. 如果call本身的连接满足条件，复用。（重试逻辑有用）
+ 2. 从连接池中取
+ 3. 创建新的
+
+
+Transmitter 在call生成的时候创建：
+
+  static RealCall newRealCall(OkHttpClient client, Request originalRequest, boolean forWebSocket) {
+    // Safely publish the Call instance to the EventListener.
+    RealCall call = new RealCall(client, originalRequest, forWebSocket);
+    call.transmitter = new Transmitter(client, call);
+    return call;
+  }
+
+Exchange在ConnectInterceptor中创建：
+  @Override public Response intercept(Chain chain) throws IOException {
+    RealInterceptorChain realChain = (RealInterceptorChain) chain;
+    Request request = realChain.request();
+    Transmitter transmitter = realChain.transmitter();
+
+    // We need the network to satisfy this request. Possibly for validating a conditional GET.
+    boolean doExtensiveHealthChecks = !request.method().equals("GET");
+    Exchange exchange = transmitter.newExchange(chain, doExtensiveHealthChecks);
+
+    return realChain.proceed(request, transmitter, exchange);
+  } 
+
 
 #### 上传文件
 请求示范：
